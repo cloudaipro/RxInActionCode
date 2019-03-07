@@ -89,6 +89,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ChatClient.cs" />
+    <Compile Include="ChatExtensions.cs" />
     <Compile Include="ChatObserver.xaml.cs">
       <DependentUpon>ChatObserver.xaml</DependentUpon>
     </Compile>

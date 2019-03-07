@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace chap4
 {
-    interface IChatConnection
+    public interface IChatConnection
     {
         event Action<string> Received;
         event Action Closed;

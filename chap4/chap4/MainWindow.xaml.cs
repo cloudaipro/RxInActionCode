@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reactive.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -32,11 +33,26 @@ namespace chap4
 
         private void btnConnect_Click(object sender, RoutedEventArgs e)
         {
-            var chatClient = new ChatClient();
-            myHub = chatClient.Connect("http://127.0.0.1:8088/", "MyHub", Name.Text);
-            IObservable<string> observableConnection =
-                new ObservableConnection(chatClient);
-            var subscription = observableConnection.Subscribe(chatCtl);
+            //V3
+            Observable.Defer<string>(() =>
+            {
+                return new ChatClient().Connect("http://127.0.0.1:8088/", "MyHub", Name.Text, out myHub)
+                                       .ToObservable();
+            })
+            .Subscribe(chatCtl);
+
+
+            //V2
+           //new ChatClient().Connect("http://127.0.0.1:8088/", "MyHub", Name.Text, out myHub)
+           //                .ToObservable()
+           //                .Subscribe(chatCtl);
+
+            //V1
+            //var chatClient = new ChatClient();
+            //myHub = chatClient.Connect("http://127.0.0.1:8088/", "MyHub", Name.Text);
+            //IObservable<string> observableConnection =
+            //    new ObservableConnection(chatClient);
+            //var subscription = observableConnection.Subscribe(chatCtl);
         }
 
         private void BtnSend_Click(object sender, RoutedEventArgs e)

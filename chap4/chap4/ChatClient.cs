@@ -32,6 +32,30 @@ namespace chap4
             return myHub;
         }
 
+        public IChatConnection Connect(string url, string hubName, string userName, out IHubProxy hubObj)
+        {
+            var connection = new HubConnection(url);
+            myHub = connection.CreateHubProxy(hubName);
+            connection.Start().ContinueWith(task => {
+                if (task.IsFaulted)
+                {
+                    Error(task.Exception.GetBaseException());
+                }
+                else
+                {
+                    //Console.WriteLine("Connected");
+
+                    myHub.On<string, string>("addMessage", (s1, s2) => {
+                        //Console.WriteLine(s1 + ": " + s2);
+                        Received(s1 + ": " + s2);
+                    });
+                }
+
+            }).Wait();
+            hubObj = myHub;
+            return this;
+        }
+
         public void Disconnect()
         {
             throw new NotImplementedException();
