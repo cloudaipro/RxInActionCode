@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.168
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "chap4", "chap4\chap4.csproj", "{F4D08F7A-A2DC-4B6A-ACA1-75A9675D3A06}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SignalRServer", "SignalRServer\SignalRServer.csproj", "{A75F1D12-EC2F-4226-9096-8E4CC9FA8032}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SignalRClient", "SignalRClient\SignalRClient.csproj", "{F26C199E-E469-4556-BB38-CD4F14136330}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F4D08F7A-A2DC-4B6A-ACA1-75A9675D3A06}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F4D08F7A-A2DC-4B6A-ACA1-75A9675D3A06}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F4D08F7A-A2DC-4B6A-ACA1-75A9675D3A06}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F4D08F7A-A2DC-4B6A-ACA1-75A9675D3A06}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A75F1D12-EC2F-4226-9096-8E4CC9FA8032}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A75F1D12-EC2F-4226-9096-8E4CC9FA8032}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A75F1D12-EC2F-4226-9096-8E4CC9FA8032}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A75F1D12-EC2F-4226-9096-8E4CC9FA8032}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F26C199E-E469-4556-BB38-CD4F14136330}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F26C199E-E469-4556-BB38-CD4F14136330}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F26C199E-E469-4556-BB38-CD4F14136330}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F26C199E-E469-4556-BB38-CD4F14136330}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D6A93655-EE7E-4FA3-9BF8-824EE265BFE1}
+	EndGlobalSection
+EndGlobal

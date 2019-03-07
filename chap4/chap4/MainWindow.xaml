@@ -1,0 +1,34 @@
+﻿<Window x:Class="chap4.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:chap4"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+    <Grid Grid.Row="0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="50"/>
+        </Grid.ColumnDefinitions>
+        <TextBox x:Name="Name" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+        <Button x:Name="btnConnect" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="CONNECT" Click="btnConnect_Click" />
+    </Grid>
+    <local:ChatObserver Grid.Row="1" x:Name="chatCtl"/>
+    <Grid Grid.Row="2">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="50"/>
+        </Grid.ColumnDefinitions>
+        <TextBox x:Name="message" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+        <Button x:Name="btnSend" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="SEND" Click="BtnSend_Click" />
+    </Grid>
+    </Grid>
+
+</Window>
