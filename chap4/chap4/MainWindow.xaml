@@ -18,8 +18,9 @@
             <ColumnDefinition Width="50"/>
         </Grid.ColumnDefinitions>
         <TextBox x:Name="Name" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-        <Button x:Name="btnConnect" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="CONNECT" Click="btnConnect_Click" />
-    </Grid>
+            <Button x:Name="btnConnect" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="CONNECT"  />
+            <!--Click="btnConnect_Click"-->
+        </Grid>
     <local:ChatObserver Grid.Row="1" x:Name="chatCtl"/>
     <Grid Grid.Row="2">
         <Grid.ColumnDefinitions>
@@ -27,8 +28,8 @@
             <ColumnDefinition Width="50"/>
         </Grid.ColumnDefinitions>
         <TextBox x:Name="message" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-        <Button x:Name="btnSend" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="SEND" Click="BtnSend_Click" />
-    </Grid>
+            <Button x:Name="btnSend" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="SEND"/> <!--Click="BtnSend_Click"-->
+        </Grid>
     </Grid>
 
 </Window>

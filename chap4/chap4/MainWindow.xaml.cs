@@ -22,50 +22,69 @@ namespace chap4
     /// </summary>
     public partial class MainWindow : Window
     {
-        HubConnection connection;
+        //HubConnection connection;
         IHubProxy myHub;
         public MainWindow()
         {
             InitializeComponent();
 
             //(new NumbersObservable(10)).Subscribe(chartCtl);
+
+            Observable.FromEventPattern<EventArgs>(btnConnect, nameof(btnConnect.Click))
+                .SubscribeOnDispatcher()
+                .Subscribe(x =>
+                      {
+                          Observable.Defer<string>(() =>
+                          {
+                              return new ChatClient().Connect("http://127.0.0.1:8088/", "MyHub", Name.Text, out myHub)
+                                                     .ToObservable();
+                          })
+                          .Subscribe(chatCtl);
+                      });
+
+            Observable.FromEventPattern<EventArgs>(btnSend, nameof(btnSend.Click))
+                .ObserveOnDispatcher()
+                .Subscribe(x =>
+                {
+                    myHub.Invoke<string>("Send", Name.Text, message.Text);
+                });
         }
 
-        private void btnConnect_Click(object sender, RoutedEventArgs e)
-        {
-            //V3
-            Observable.Defer<string>(() =>
-            {
-                return new ChatClient().Connect("http://127.0.0.1:8088/", "MyHub", Name.Text, out myHub)
-                                       .ToObservable();
-            })
-            .Subscribe(chatCtl);
+        //private void btnConnect_Click(object sender, RoutedEventArgs e)
+        //{
+        //    //V3
+        //    Observable.Defer<string>(() =>
+        //    {
+        //        return new ChatClient().Connect("http://127.0.0.1:8088/", "MyHub", Name.Text, out myHub)
+        //                               .ToObservable();
+        //    })
+        //    .Subscribe(chatCtl);
 
 
-            //V2
-           //new ChatClient().Connect("http://127.0.0.1:8088/", "MyHub", Name.Text, out myHub)
-           //                .ToObservable()
-           //                .Subscribe(chatCtl);
+        //    //V2
+        //   //new ChatClient().Connect("http://127.0.0.1:8088/", "MyHub", Name.Text, out myHub)
+        //   //                .ToObservable()
+        //   //                .Subscribe(chatCtl);
 
-            //V1
-            //var chatClient = new ChatClient();
-            //myHub = chatClient.Connect("http://127.0.0.1:8088/", "MyHub", Name.Text);
-            //IObservable<string> observableConnection =
-            //    new ObservableConnection(chatClient);
-            //var subscription = observableConnection.Subscribe(chatCtl);
-        }
+        //    //V1
+        //    //var chatClient = new ChatClient();
+        //    //myHub = chatClient.Connect("http://127.0.0.1:8088/", "MyHub", Name.Text);
+        //    //IObservable<string> observableConnection =
+        //    //    new ObservableConnection(chatClient);
+        //    //var subscription = observableConnection.Subscribe(chatCtl);
+        //}
 
-        private void BtnSend_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                myHub.Invoke<string>("Send", Name.Text, message.Text);
-            }
-            catch (Exception)
-            {
+        //private void BtnSend_Click(object sender, RoutedEventArgs e)
+        //{
+        //    try
+        //    {
+        //        myHub.Invoke<string>("Send", Name.Text, message.Text);
+        //    }
+        //    catch (Exception)
+        //    {
 
-                throw;
-            }
-        }
+        //        throw;
+        //    }
+        //}
     }
 }
