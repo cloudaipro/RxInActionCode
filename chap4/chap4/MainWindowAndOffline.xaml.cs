@@ -19,59 +19,34 @@ using System.Windows.Shapes;
 namespace chap4
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for MainWindowAndOffline.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindowAndOffline : Window
     {
         //HubConnection connection;
         IHubProxy myHub;
-        public MainWindow()
+        public MainWindowAndOffline()
         {
             InitializeComponent();
 
             //(new NumbersObservable(10)).Subscribe(chartCtl);
+            IEnumerable<string> loadedMessage = LoadMessageFromDB();
+            //Observable.FromEventPattern<EventArgs>(btnConnect, nameof(btnConnect.Click))
+            //          .SubscribeOnDispatcher()
+            //          .Subscribe(x => loadedMessage
+            //                        .ToObservable()
+            //                        .Concat(new ChatClient(() => btnConnect.IsEnabled = false)
+            //                                    .Connect("http://127.0.0.1:8088/", "MyHub", Name.Text, out myHub)
+            //                                    .ToObservable())
+            //                        .Subscribe(chatCtl));
 
             Observable.FromEventPattern<EventArgs>(btnConnect, nameof(btnConnect.Click))
-                .SubscribeOnDispatcher()
-                .Subscribe(x => new ChatClient(() => btnConnect.IsEnabled = false)
-                                .Connect("http://127.0.0.1:8088/", "MyHub", Name.Text, out myHub)
-                                .ToObservable()
-                                .Subscribe(chatCtl));
-
-            //Observable.FromEventPattern<EventArgs>(btnConnect, nameof(btnConnect.Click))
-            //    .SubscribeOnDispatcher()
-            //    .Subscribe(delegate
-            //                  {
-            //                      Observable.Defer<string>(() =>
-            //                      {
-            //                          return new ChatClient().Connect("http://127.0.0.1:8088/", "MyHub", Name.Text, out myHub)
-            //                                                 .ToObservable();
-            //                      })
-            //                      .Subscribe(chatCtl);
-            //                  });
-
-            //Observable.FromEventPattern<EventArgs>(btnSend, nameof(btnSend.Click))
-            //    .ObserveOnDispatcher()
-            //    .Subscribe(x =>
-            //                {
-            //                    myHub.Invoke<string>("Send", Name.Text, message.Text);
-            //                });
-
-            //Observable.FromEventPattern<EventArgs>(btnSend, nameof(btnSend.Click))
-            //    .ObserveOnDispatcher()
-            //    .Subscribe(delegate 
-            //                {
-            //                    myHub.Invoke<string>("Send", Name.Text, message.Text);
-            //                });
-
-            //
-            //Observable.FromEvent<RoutedEventHandler, Tuple<object, RoutedEventArgs>>(
-            //            rxHandle =>
-            //                (o, routedEventArgs) => rxHandle(Tuple.Create(o, routedEventArgs)),
-            //            h => btnSend.Click += h,
-            //            h => btnSend.Click -= h)
-            //          .ObserveOnDispatcher()
-            //          .Subscribe(x => myHub.Invoke<string>("Send", Name.Text, message.Text));
+                      .SubscribeOnDispatcher()
+                      .Subscribe(x =>new ChatClient(() => btnConnect.IsEnabled = false)
+                                    .Connect("http://127.0.0.1:8088/", "MyHub", Name.Text, out myHub)
+                                    .ToObservable()
+                                    .StartWith(loadedMessage)
+                                    .Subscribe(chatCtl));
 
             Observable.FromEvent<RoutedEventHandler, Tuple<object, RoutedEventArgs>>(
                         delegate (Action<Tuple<object, RoutedEventArgs>> rxHandle)
@@ -85,6 +60,15 @@ namespace chap4
 
             //Unit x;
         }
+
+
+        public IEnumerable<string> LoadMessageFromDB()
+        {
+            yield return "Convert 20 mm to cm";
+            yield return "20 mm = 20 ÷ 10 = 2 cm";
+            yield return "How to perform metric conversion using the table method or shortcut method?";
+        }
+
 
         //private void btnConnect_Click(object sender, RoutedEventArgs e)
         //{

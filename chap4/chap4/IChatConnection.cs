@@ -11,6 +11,7 @@ namespace chap4
         event Action<string> Received;
         event Action Closed;
         event Action<Exception> Error;
+        event Action Connected;
 
         void Disconnect();
     }
