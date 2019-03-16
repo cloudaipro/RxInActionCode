@@ -10,6 +10,11 @@
         <Button Content="Button" HorizontalAlignment="Left" Margin="330,34,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
         <TextBox x:Name="amount" HorizontalAlignment="Left" Height="23" Margin="164,31,0,0" TextWrapping="Wrap" Text="10" VerticalAlignment="Top" Width="120" />
         <TextBox x:Name="offset" HorizontalAlignment="Left" Height="23" Margin="28,31,0,0" TextWrapping="Wrap" Text="100" VerticalAlignment="Top" Width="120"/>
+        <Button Content="5.1.2" HorizontalAlignment="Left" Margin="330,83,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click_1"/>
+        <Button Content="Search_WithAsyncAwait" HorizontalAlignment="Left" Margin="330,131,0,0" VerticalAlignment="Top" Width="174" Click="Button_Click_2"/>
+        <Button Content="PrimeCheckService" HorizontalAlignment="Left" Margin="330,174,0,0" VerticalAlignment="Top" Width="174" Click="Button_Click_3"/>
+        <Button Content="PrimeCheckService1" HorizontalAlignment="Left" Margin="330,217,0,0" VerticalAlignment="Top" Width="174" Click="Button_Click_4" />
+        <Button Content="5.2.1" HorizontalAlignment="Left" Margin="330,253,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click_5"/>
 
     </Grid>
 </Window>

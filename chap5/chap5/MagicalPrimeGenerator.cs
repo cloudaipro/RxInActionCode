@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,6 +12,21 @@ namespace chap5
     {
         public int startOff = 100000;
 
+
+        public IObservable<int> GeneratePrimes(int amount)
+        {
+            return Observable.Create<int>((o) =>
+            {
+                foreach (int i in GeneratePrime())
+                {
+                    o.OnNext(i);
+                    if (amount-- == 0)
+                        break;
+                }
+                o.OnCompleted();
+                return Disposable.Empty;
+            });
+        }
 
         public async Task<IReadOnlyCollection<int>> GenerateAsync(int amount)
         {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -43,6 +44,82 @@ namespace chap5
             primes.ToObservable<int>()
                                         .Timestamp()
                                         .Subscribe(x => Console.WriteLine(x.ToString()));
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            MagicalPrimeGenerator generator = new MagicalPrimeGenerator();
+            generator.GeneratePrimes(10)
+                     .Timestamp()
+                     .Subscribe(x => Console.WriteLine(x.ToString()));
+        }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            //(new SearchEngineExample()).Search("ABC").Subscribe(x => Console.WriteLine(x));
+            (new SearchEngineExample()).Search_ConcatingTasks("ABC").Subscribe(x => Console.WriteLine(x));
+        }
+
+        private void Button_Click_3(object sender, RoutedEventArgs e)
+        {
+            var svc = new PrimeCheckService();
+
+            //var subscription = Observable.Range(2, 10)
+            //                             .SelectMany((number) => svc.IsPrimeAsync(number),
+            //                                         (number, isPrime) => new { number, isPrime})
+            //                             .Where(x => x.isPrime)
+            //                             .Select(x => x.number)
+            //                             .Subscribe(x => Console.WriteLine(x));
+
+            //var subscription = Observable.Range(2, 10)
+            //                             .SelectMany((number) => svc.IsPrimeAsync(number),
+            //                                         (number, isPrime) => new { number, isPrime })
+            //                             .Where(x => x.isPrime)
+            //                             .Select(x => x.number)
+            //                             .Subscribe(x => Console.WriteLine(x));
+            var subscription1 = Observable.Range(2, 10)
+                             .SelectMany(async (number) => await svc.IsPrimeAsync(number))                             
+                             .Where(x => x)
+                             .Select(x => x)
+                             .Subscribe(x => Console.WriteLine(x));
+
+            //IObservable<int> primes =
+            //    from number in Observable.Range(2, 10)
+            //    from isPrime in svc.IsPrimeAsync(number)
+            //    where isPrime
+            //    select number;
+            //primes.Subscribe(x => Console.WriteLine(x));
+
+
+        }
+
+        private void Button_Click_4(object sender, RoutedEventArgs e)
+        {
+            var svc = new PrimeCheckService();
+            IObservable<int> primes =
+                Observable.Range(2, 10)
+                          .Select(async number => new { number, isPrime = await svc.IsPrimeAsync(number) })
+                          .Concat()
+                          .Where(x => x.isPrime)
+                          .Select(x => x.number);
+            primes.Subscribe(x => Console.WriteLine(x));
+        }
+
+        private void Button_Click_5(object sender, RoutedEventArgs e)
+        {
+            var updatesWebService = new UpdatesWebService();
+            //var _subscribe = Observable.Interval(TimeSpan.FromSeconds(1))
+            //                           .SelectMany(_ => updatesWebService.GetUpdatesAsync())                                       
+            //                           .SelectMany(updates => updates)
+            //                           .ObserveOnDispatcher()
+            //                           .Subscribe(x => Console.WriteLine(x));
+
+            var _subscribe = Observable.Interval(TimeSpan.FromSeconds(1))
+                                       .Select(index  => updatesWebService.GetUpdatesAsync(index))
+                                       .Concat()
+                                       .SelectMany(x => x)
+                                       .ObserveOnDispatcher()
+                                       .Subscribe(x => Console.WriteLine(x));
         }
     }
 }
